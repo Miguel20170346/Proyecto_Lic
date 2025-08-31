@@ -75,6 +75,7 @@ body {
   border-radius: 10px;
   width: 80%;
   max-width: 600px;
+  height: 80px;
 }
 
 /* Media Queries para responsividad */
