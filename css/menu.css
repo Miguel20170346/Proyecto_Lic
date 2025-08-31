@@ -1,39 +1,72 @@
 /* Estilos generales del cuerpo de la página */
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #a7f5a5; /* Un verde pastel inspirado en tu imagen */
+  background-color: #a7f5a5; /* El verde pastel original */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#99e897" opacity="0.2"/></svg>');
+  background-size: 20px 20px; /* Un patrón de burbujas sutil */
   color: #333;
+  min-height: 100vh;
 }
 
 /* Contenedor del Logo */
 .logo-container {
-  background-color: #fceb9c; /* Amarillo pastel */
-  border: 2px solid #e7d16f;
+  background-color: #fceb9c; /* El amarillo pastel original */
+  border: 4px solid #e7d16f; /* Borde más grueso y notable */
+  border-radius: 1rem;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+  transform: rotate(-3deg); /* Le da un toque juguetón */
+  transition: transform 0.3s ease;
+}
+
+.logo-container:hover {
+  transform: rotate(0deg) scale(1.02);
 }
 
 .logo-container h1 {
   color: #4b4221;
+  font-size: 4rem;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Botón personalizado */
 .btn-jugar {
-  background-color: #a392e6; /* Morado pastel */
+  background-color: #a392e6; /* El morado pastel original */
   color: #ffffff;
   font-weight: bold;
-  padding: 1rem;
-  border: none;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1.5rem;
+  padding: 1.5rem 3rem;
+  border: 3px solid #7c6fd4;
+  border-radius: 10px;
+  box-shadow: 0 6px #7c6fd4; /* Sombra que simula un botón 3D */
+  transition: all 0.2s ease;
 }
 
 .btn-jugar:hover {
-  background-color: #8975d6; /* Un tono más oscuro al pasar el cursor */
+  background-color: #8975d6;
   color: #ffffff;
-  transform: translateY(-3px); /* Efecto de "levantarse" */
+  transform: translateY(-2px);
+  box-shadow: 0 8px #7c6fd4;
+}
+
+.btn-jugar:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px #7c6fd4;
 }
 
 /* Contenedor de Créditos */
 .creditos-container {
-  background-color: #3a8c9e; /* Azul/verde azulado oscuro */
+  background-color: #3a8c9e; /* El azul/verde azulado original */
   color: #ffffff;
   min-width: 300px;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 2px solid #2e7182;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.creditos-container h5 {
+  color: #fceb9c; /* Usamos el amarillo como color de acento */
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
