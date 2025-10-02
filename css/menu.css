@@ -1,39 +1,163 @@
 /* Estilos generales del cuerpo de la página */
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #a7f5a5; /* Un verde pastel inspirado en tu imagen */
-  color: #333;
+  background: linear-gradient(135deg, var(--background-color) 0%, #8ae0a8 100%);
+  background-color: #FDF6E3;
+  color: var(--text-color);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.main-container 
+{
+  padding: 20px;
+}
+.content-wrapper {
+  max-width: 800px;
+  width: 100%;
 }
 
 /* Contenedor del Logo */
 .logo-container {
-  background-color: #fceb9c; /* Amarillo pastel */
-  border: 2px solid #e7d16f;
+  background-color: #FFE0B2;
+  border: 3px solid #e7d16f;
+  border-radius: 20px;
+  padding: 2.5rem 1.5rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
 }
-
+.logo-container::before {
+content: "";
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 70%);
+z-index: 0;
+}
 .logo-container h1 {
   color: #4b4221;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+  letter-spacing: 1px;
 }
-
 /* Botón personalizado */
 .btn-jugar {
-  background-color: #a392e6; /* Morado pastel */
-  color: #ffffff;
-  font-weight: bold;
-  padding: 1rem;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  background-color: #F8BBD0;
+  color: var(--light-text);
+  font-weight: 600;
+  padding: 1.2rem 2rem;
   border: none;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  border-radius: 50px;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(163, 146, 230, 0.4);
+  position: relative;
+  overflow: hidden;
 }
-
+.btn-jugar::after {
+ content: "";
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background: linear-gradient(rgba(255,255,255,0.2), red);
+ transform: translateY(-100%);
+ transition: transform 0.3s ease;
+}
 .btn-jugar:hover {
-  background-color: #8975d6; /* Un tono más oscuro al pasar el cursor */
-  color: #ffffff;
-  transform: translateY(-3px); /* Efecto de "levantarse" */
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(163, 146, 230, 0.6);
 }
-
+.btn-jugar:hover::after {
+  transform: translateY(0);
+}
 /* Contenedor de Créditos */
 .creditos-container {
-  background-color: #3a8c9e; /* Azul/verde azulado oscuro */
-  color: #ffffff;
-  min-width: 300px;
+  background: linear-gradient(135deg, var(--accent-color) 0%, #2a6b7a 100%);
+  background-color: #C8E6C9;
+  color: var(--light-text);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  margin-top: 2rem;
+  justify-content: center;
 }
+.creditos-container h5 {
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  position: relative;
+  padding-bottom: 10px;
+}
+.creditos-container ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+.creditos-container ul li {
+  padding: 5px 0;
+  position: relative;
+  padding-left: 20px;
+  text-align: left;
+}
+.creditos-container p {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+ /* Animaciones sutiles */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.logo-container, .btn-jugar, .creditos-container {
+  animation: fadeInUp 0.6s ease forwards;
+}
+.logo-container {
+  animation-delay: 0.1s;
+}
+.btn-jugar {
+  animation-delay: 0.3s;
+}
+.creditos-container {
+  animation-delay: 0.5s;
+}
+/* Responsive mejoras */
+@media (max-width: 768px) {
+  .logo-container {
+    padding: 1.5rem 1rem;
+  }
+  .logo-container h1 {
+    font-size: 2.2rem;
+  }
+  .btn-jugar {
+    font-size: 1.1rem;
+    padding: 1rem 1.5rem;
+  }
+  .creditos-container {
+   padding: 1.5rem;
+  }
+}
+@media (max-width: 576px) {
+  .logo-container h1 {
+    font-size: 1.8rem;
+  }
+  .btn-jugar {
+    font-size: 1rem;
+  }
+}
+
