@@ -22,16 +22,16 @@ body {
 
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 100px); /* 3x3 */
-  grid-template-rows: repeat(3, 100px);
+  grid-template-columns: repeat(4, 80px); /* 4x4 */
+  grid-template-rows: repeat(4, 80px);
   gap: 5px;
 }
 
 .tile {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   background-image: url('../images/image.jpeg'); /* aquí va tu imagen del puzzle */
-  background-size: 300px 300px; /* ajustado al tablero 3x3 */
+  background-size: 320px 320px; /* ajustado al tablero 4x4 */
   border-radius: 5px;
   cursor: pointer;
   transition: 0.3s;
