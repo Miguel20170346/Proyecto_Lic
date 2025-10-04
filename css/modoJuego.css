@@ -44,6 +44,11 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin: 0 40px;
 }
+.puzzle-logo{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
 .separator-column {
   width: 80px;
   height: 100%;
