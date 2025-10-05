@@ -1,0 +1,93 @@
+/* Estilos generales del cuerpo de la página */
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  overflow-x: hidden; /* Evita el scroll horizontal */
+}
+
+/* Sección superior (head col-12) */
+.head-section {
+  background-color: #ff6f42; /* Naranja rojizo */
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.head-section h2 {
+  color: #ffffff;
+  letter-spacing: 2px;
+}
+
+/* Sección de contenido principal (content) */
+.content-section {
+  background-color: #fffae8; /* Amarillo muy suave */
+  min-height: calc(
+    100vh - 90px
+  ); /* Ajusta la altura para que ocupe el resto de la pantalla */
+  padding-bottom: 50px; /* Espacio extra en la parte inferior */
+}
+
+/* Contenedor circular del logo (Logo col-12) */
+.logo-circle-container {
+  background-color: #e0e0e0; /* Gris claro */
+  width: 200px; /* Ancho del círculo */
+  height: 200px; /* Alto del círculo */
+  border-radius: 50%; /* Lo hace circular */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logo-text {
+  font-size: 2rem; /* Tamaño de la fuente para el logo */
+  color: #555;
+  line-height: 0.9; /* Espacio entre las líneas del texto */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Botones de nivel (col-4) */
+.btn-nivel {
+  background-color: #8c5d3f; /* Marrón oscuro */
+  color: #ffffff;
+  font-weight: bold;
+  padding: 1rem 2rem;
+  border-radius: 10px; /* Esquinas ligeramente redondeadas */
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  width: 80%; /* Ancho responsivo */
+  max-width: 250px; /* Ancho máximo para que no sean demasiado grandes */
+}
+
+.btn-nivel:hover {
+  background-color: #6d4a2f; /* Un tono más oscuro al pasar el cursor */
+  color: #ffffff;
+  transform: translateY(-5px); /* Efecto de "levantarse" */
+}
+
+/* Estilo para el placeholder del contenido */
+.content-placeholder {
+  font-style: italic;
+  color: #777;
+  padding: 20px;
+  border: 1px dashed #ccc;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+  height: 80px;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+  .btn-nivel {
+    width: 90%; /* Más ancho en pantallas pequeñas */
+  }
+  .logo-circle-container {
+    width: 150px;
+    height: 150px;
+  }
+  .logo-text {
+    font-size: 1.5rem;
+  }
+}
