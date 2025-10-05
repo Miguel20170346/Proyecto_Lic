@@ -1,0 +1,98 @@
+.head-section{
+ background-color: #FF692A;
+}
+.contenido-modojuego{
+ background-color: #FFF085;
+ min-height: calc(100vh - 90px); 
+ padding: 20px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+}
+.btn-campana{
+ background-color: #733E0A;
+ color: white;
+ width: 200px;
+ padding: 15px 30px;
+ font-size: 1.1rem;
+ transition: all 0.3s ease;
+ margin-bottom: 25px;
+}
+.btn-arcade{
+ background-color: #733E0A;   
+ color: white;
+ width: 200px;
+ padding: 15px 30px;
+ font-size: 1.1rem;
+ transition: all 0.3s ease;
+}
+.btn-campana:hover,
+.btn-arcade:hover {
+ background: linear-gradient(#733E0A 0%, white 100%);
+ transform: translateY(-2px);
+ box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+.logo-circle-container {
+  background-color: #e0e0e0; /* Gris claro */
+  width: 200px; /* Ancho del círculo */
+  height: 200px; /* Alto del círculo */
+  border-radius: 50%; /* Lo hace circular */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin: 0 40px;
+}
+.puzzle-logo{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
+.separator-column {
+  width: 80px;
+  height: 100%;
+}
+.botones-juego{
+  margin: 0 40px;
+}
+@media (min-width: 768px) {
+  .botones-juego {
+    margin-left: 60px; /* Más espacio entre círculo y botones en desktop */
+  }
+}
+@media (max-width: 767px) {
+  .logo-circle-container {
+    width: 180px;
+    height: 180px;
+    margin: 20px 0;
+  }
+  
+  .botones-juego {
+    margin: 20px 0;
+  }
+  
+  .btn-campana,
+  .btn-arcade {
+    width: 220px;
+  }
+}
+@media (min-width: 1200px) {
+  .logo-circle-container {
+    width: 220px;
+    height: 220px;
+    margin-bottom: 20px;
+  }
+  
+  .botones-juego {
+    margin-left: 80px;
+    margin-top: 20px;
+  }
+  
+  .btn-campana,
+  .btn-arcade {
+    width: 220px;
+    padding: 16px 35px;
+    font-size: 1.2rem;
+  }
+}
