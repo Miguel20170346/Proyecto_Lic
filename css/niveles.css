@@ -39,6 +39,11 @@ body {
   border: 3px solid #ccc;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+.img-puzzle{
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+}
 
 .logo-text {
   font-size: 2rem; /* Tamaño de la fuente para el logo */
@@ -61,9 +66,9 @@ body {
 }
 
 .btn-nivel:hover {
-  background-color: #6d4a2f; /* Un tono más oscuro al pasar el cursor */
-  color: #ffffff;
-  transform: translateY(-5px); /* Efecto de "levantarse" */
+ background: linear-gradient(#733E0A 0%, white 100%);
+ transform: translateY(-2px);
+ box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* Estilo para el placeholder del contenido */
