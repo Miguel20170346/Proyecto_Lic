@@ -8,7 +8,7 @@ const timeSpan = document.getElementById("time");
 const board = document.getElementById("puzzle-board");
 
 let tiles = [];
-let emptyIndex = 8; // Última celda vacía en el tablero 3x3
+let emptyIndex;
 
 // Iniciar temporizador
 function startTimer() {
@@ -21,7 +21,6 @@ function startTimer() {
   }
 }
 
-// Formatear tiempo mm:ss
 function formatTime(sec) {
   let m = Math.floor(sec / 60);
   let s = sec % 60;
@@ -31,31 +30,39 @@ function formatTime(sec) {
 // Crear tablero dinámico
 function createBoard() {
   tiles = [];
-  board.innerHTML = ""; // limpiar tablero
-  for (let i = 0; i < 9; i++) {
+  board.innerHTML = "";
+  const size = 3;
+  const total = size * size;
+
+  board.style.gridTemplateColumns = `repeat(${size}, 100px)`;
+  board.style.gridTemplateRows = `repeat(${size}, 100px)`;
+
+  for (let i = 0; i < total; i++) {
     const tile = document.createElement("div");
     tile.classList.add("tile");
-    if (i === 8) {
+
+    if (i === total - 1) {
       tile.classList.add("empty");
+      emptyIndex = i;
     } else {
-      let x = (i % 3) * -100;
-      let y = Math.floor(i / 3) * -100;
-      tile.style.backgroundPosition = `${x}px ${y}px`;
-      tile.dataset.index = i; // posición original
-      tile.addEventListener("click", () => moveTile(i));
+      const row = Math.floor(i / size);
+      const col = i % size;
+      tile.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
     }
-    tiles.push(tile);
+
+    tile.addEventListener("click", () => moveTile(tiles.indexOf(tile)));
     board.appendChild(tile);
+    tiles.push(tile);
   }
+
   shuffleBoard();
 }
 
-// Mezclar el tablero con movimientos válidos
+// Mezclar el tablero
 function shuffleBoard() {
   let lastMove;
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 150; i++) {
     let possibleMoves = getValidMoves();
-    // evitar que repita siempre el mismo
     let move = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
     if (move !== lastMove) {
       swapTiles(move, emptyIndex);
@@ -63,6 +70,7 @@ function shuffleBoard() {
       lastMove = move;
     }
   }
+
   moves = 0;
   seconds = 0;
   isPlaying = false;
@@ -71,16 +79,17 @@ function shuffleBoard() {
   timeSpan.textContent = "00:00";
 }
 
-// Obtener movimientos válidos desde la posición vacía
+// Movimientos válidos
 function getValidMoves() {
+  const size = 3;
   const validMoves = [];
-  const row = Math.floor(emptyIndex / 3);
-  const col = emptyIndex % 3;
+  const row = Math.floor(emptyIndex / size);
+  const col = emptyIndex % size;
 
-  if (row > 0) validMoves.push(emptyIndex - 3); // arriba
-  if (row < 2) validMoves.push(emptyIndex + 3); // abajo
-  if (col > 0) validMoves.push(emptyIndex - 1); // izquierda
-  if (col < 2) validMoves.push(emptyIndex + 1); // derecha
+  if (row > 0) validMoves.push(emptyIndex - size);
+  if (row < size - 1) validMoves.push(emptyIndex + size);
+  if (col > 0) validMoves.push(emptyIndex - 1);
+  if (col < size - 1) validMoves.push(emptyIndex + 1);
 
   return validMoves;
 }
@@ -91,7 +100,7 @@ function swapTiles(i, j) {
   [tiles[i].style.backgroundPosition, tiles[j].style.backgroundPosition] = [tiles[j].style.backgroundPosition, tiles[i].style.backgroundPosition];
 }
 
-// Movimiento de fichas por clic
+// Mover ficha
 function moveTile(index) {
   if (getValidMoves().includes(index)) {
     swapTiles(index, emptyIndex);
@@ -102,5 +111,5 @@ function moveTile(index) {
   }
 }
 
-// Inicializar juego
 createBoard();
+

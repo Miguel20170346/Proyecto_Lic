@@ -8,8 +8,7 @@
   <link rel="stylesheet" href="../css/intermedio.css">
 </head>
 <body>
-  <div class="container py-4">
-    <!-- Barra superior -->
+   <!-- Barra superior -->
     <div class="row justify-content-center mb-4">
       <div class="col-8 top-bar d-flex justify-content-between">
         <div>Cantidad de movimientos: <span id="moves">0</span></div>
@@ -17,11 +16,16 @@
       </div>
     </div>
 
-    <!-- Área del puzzle -->
-    <div class="row justify-content-center">
-      <div class="col-12 puzzle-area">
-        <div id="puzzle-board" class="board"></div>
+    <!-- Contenedor principal -->
+    <div class="game-box d-flex justify-content-center align-items-center gap-5 p-4">
+      <!-- Imagen objetivo -->
+      <div class="preview text-center">
+        <p class="fw-bold mb-2">Objetivo</p>
+        <img src="../imagenes/objetivofinal.jpg" alt="Imagen objetivo" class="preview-img" />
       </div>
+
+      <!-- Puzzle -->
+      <div id="puzzle-board" class="board"></div>
     </div>
   </div>
 
