@@ -9,7 +9,7 @@ const timeSpan = $("#time");
 const board = $("#puzzle-board");
 const previewImg = $(".preview-img");
 
-// Lista de imágenes (5 puzzles diferentes)
+// Lista de imágenes a usar
 const imagenes = [
   "../imagenes/nvlIntermedio/Cuzuco.jpg",
   "../imagenes/nvlIntermedio/Izalco.jpg",
@@ -18,9 +18,11 @@ const imagenes = [
   "../imagenes/nvlIntermedio/Tapir.jpg"
 ];
 
+// Arreglo que contiene las piezas del puzzle
 let tiles = [];
 let emptyIndex;
 
+// Funcion que inicia el cronometro
 function startTimer() {
   if (!isPlaying) {
     isPlaying = true;
@@ -31,12 +33,14 @@ function startTimer() {
   }
 }
 
+//Funcion que controla el formato del cronometro
 function formatTime(sec) {
   let m = Math.floor(sec / 60);
   let s = sec % 60;
   return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
 
+//Funcion que crea el tablero del puzzle
 function createBoard() {
   tiles = [];
   board.empty();
@@ -75,6 +79,7 @@ function createBoard() {
   shuffleBoard();
 }
 
+//Funcion que ordena aleatoriamente el puzzle
 function shuffleBoard() {
   let lastMove;
   for (let i = 0; i < 150; i++) {
@@ -95,6 +100,7 @@ function shuffleBoard() {
   timeSpan.text("00:00");
 }
 
+//Funcion que obtiene los movimientos validos del puzzle
 function getValidMoves() {
   const size = 4;
   const validMoves = [];
@@ -109,6 +115,7 @@ function getValidMoves() {
   return validMoves;
 }
 
+//Funcion que intercambia las piezas del puzzle
 function swapTiles(i, j) {
   // Verificar que ambos índices existan en el arreglo
   if (!tiles[i] || !tiles[j]) return;
@@ -133,7 +140,7 @@ function swapTiles(i, j) {
   }
 }
 
-
+//Funcion que mueve las piezas del puzzle
 function moveTile(index) {
   if (getValidMoves().includes(index)) {
     swapTiles(index, emptyIndex);
@@ -145,6 +152,7 @@ function moveTile(index) {
   }
 }
 
+//Funcion que controla si el puzzle esta correctamente armado
 function revisarSolucion() {
   const total = tiles.length;
   if (emptyIndex !== total - 1) return false;

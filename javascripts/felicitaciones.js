@@ -1,4 +1,4 @@
-// Create confetti animation
+// Animacion de confeti
         function createConfetti() {
             const container = document.getElementById('confetti-container');
             const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
@@ -14,11 +14,11 @@
                 container.appendChild(confetti);
             }
         }
-        
-        // Function to simulate going back to home
+
+        // Funcion que te envia de regreso al menu principal
         function goHome() {
           window.location.href = '../menu.html';
         }
         
-        // Initialize confetti when page loads
+        // Inicia el confeti cuando la pagina carga
         window.onload = createConfetti;
