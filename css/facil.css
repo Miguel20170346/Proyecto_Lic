@@ -56,7 +56,7 @@ body {
   background-size: 300px 300px;
   border-radius: 5px;
   cursor: pointer;
-  transition: transform 0.15s ease; /* animación más suave */
+  transition: none;
 }
 
 .tile.empty {
