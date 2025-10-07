@@ -8,7 +8,8 @@ const timeSpan = document.getElementById("time");
 const board = document.getElementById("puzzle-board");
 
 let tiles = [];
-let emptyIndex = 8; // Última celda vacía en el tablero 3x3
+const condition = Array.from({length: 8}, (_, i) => i);
+let emptyIndex;
 
 // Iniciar temporizador
 function startTimer() {
@@ -21,7 +22,6 @@ function startTimer() {
   }
 }
 
-// Formatear tiempo mm:ss
 function formatTime(sec) {
   let m = Math.floor(sec / 60);
   let s = sec % 60;
@@ -31,31 +31,41 @@ function formatTime(sec) {
 // Crear tablero dinámico
 function createBoard() {
   tiles = [];
-  board.innerHTML = ""; // limpiar tablero
-  for (let i = 0; i < 9; i++) {
+  board.innerHTML = "";
+  const size = 3;
+  const total = size * size;
+
+  board.style.gridTemplateColumns = `repeat(${size}, 100px)`;
+  board.style.gridTemplateRows = `repeat(${size}, 100px)`;
+
+  for (let i = 0; i < total; i++) {
     const tile = document.createElement("div");
     tile.classList.add("tile");
-    if (i === 8) {
+    // 'data-piece' guarda qué pieza está actualmente en esa casilla (0..8)
+    tile.dataset.piece = String(i);
+    if (i === total - 1) {
       tile.classList.add("empty");
+      emptyIndex = i;
+      // la ficha vacía no necesita backgroundPosition
+      tile.style.backgroundPosition = "";
     } else {
-      let x = (i % 3) * -100;
-      let y = Math.floor(i / 3) * -100;
-      tile.style.backgroundPosition = `${x}px ${y}px`;
-      tile.dataset.index = i; // posición original
-      tile.addEventListener("click", () => moveTile(i));
+      const row = Math.floor(i / size);
+      const col = i % size;
+      tile.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
     }
-    tiles.push(tile);
+
+    tile.addEventListener("click", () => moveTile(tiles.indexOf(tile)));
     board.appendChild(tile);
+    tiles.push(tile);
   }
   shuffleBoard();
 }
 
-// Mezclar el tablero con movimientos válidos
+// Mezclar el tablero
 function shuffleBoard() {
   let lastMove;
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 150; i++) {
     let possibleMoves = getValidMoves();
-    // evitar que repita siempre el mismo
     let move = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
     if (move !== lastMove) {
       swapTiles(move, emptyIndex);
@@ -71,27 +81,31 @@ function shuffleBoard() {
   timeSpan.textContent = "00:00";
 }
 
-// Obtener movimientos válidos desde la posición vacía
+// Movimientos válidos
 function getValidMoves() {
+  const size = 3;
   const validMoves = [];
-  const row = Math.floor(emptyIndex / 3);
-  const col = emptyIndex % 3;
+  const row = Math.floor(emptyIndex / size);
+  const col = emptyIndex % size;
 
-  if (row > 0) validMoves.push(emptyIndex - 3); // arriba
-  if (row < 2) validMoves.push(emptyIndex + 3); // abajo
-  if (col > 0) validMoves.push(emptyIndex - 1); // izquierda
-  if (col < 2) validMoves.push(emptyIndex + 1); // derecha
+  if (row > 0) validMoves.push(emptyIndex - size);
+  if (row < size - 1) validMoves.push(emptyIndex + size);
+  if (col > 0) validMoves.push(emptyIndex - 1);
+  if (col < size - 1) validMoves.push(emptyIndex + 1);
 
   return validMoves;
 }
 
 // Intercambiar fichas
 function swapTiles(i, j) {
+  // intercambia clases y apariencia
   [tiles[i].className, tiles[j].className] = [tiles[j].className, tiles[i].className];
   [tiles[i].style.backgroundPosition, tiles[j].style.backgroundPosition] = [tiles[j].style.backgroundPosition, tiles[i].style.backgroundPosition];
+  // intercambio del identificador lógico de la pieza
+  [tiles[i].dataset.piece, tiles[j].dataset.piece] = [tiles[j].dataset.piece, tiles[i].dataset.piece];
 }
 
-// Movimiento de fichas por clic
+// Mover ficha
 function moveTile(index) {
   if (getValidMoves().includes(index)) {
     swapTiles(index, emptyIndex);
@@ -99,8 +113,26 @@ function moveTile(index) {
     moves++;
     movesSpan.textContent = moves;
     startTimer();
+    revisarSolucion();
   }
 }
-
-// Inicializar juego
 createBoard();
+
+// Comprobar si está resuelto
+function revisarSolucion() {
+  const total = tiles.length;
+
+  // la casilla vacía debe estar en la última posición
+  if (emptyIndex !== total - 1) return false;
+
+  // cada casilla i (excepto la última) debe contener la pieza i
+  for (let i = 0; i < total - 1; i++) {
+    if (parseInt(tiles[i].dataset.piece, 10) !== i) {
+      return false;
+    }
+  }
+  clearInterval(timer);
+  isPlaying = false;
+  alert(`¡Felicidades! Rompecabezas resuelto en ${moves} movimientos y ${formatTime(seconds)} minutos.`);
+  return true;
+}
