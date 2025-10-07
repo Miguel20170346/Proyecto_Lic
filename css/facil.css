@@ -3,6 +3,7 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* Barra superior */
 .top-bar {
   background: #a0eaff;
   border-radius: 8px;
@@ -11,30 +12,51 @@ body {
   font-weight: bold;
 }
 
-.puzzle-area {
+
+.game-box {
   background: #d9f5f7;
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 40px 60px;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 100px; 
 }
 
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.preview-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+/* Puzzle */
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 100px); /* 3x3 */
+  grid-template-columns: repeat(3, 100px);
   grid-template-rows: repeat(3, 100px);
   gap: 5px;
 }
 
+/* Fichas */
 .tile {
   width: 100px;
   height: 100px;
-  background-image: url('../imagenes/placeholders/Placeholder.png'); /* aquí va la imagen del puzzle */
-  background-size: 300px 300px; /* ajustado al tablero 3x3 */
+  background-image: url('../imagenes/placeholders/Placeholder.png');
+  background-size: 300px 300px;
   border-radius: 5px;
   cursor: pointer;
-  transition: none;
+  transition: transform 0.15s ease; /* animación más suave */
 }
 
 .tile.empty {
@@ -42,14 +64,17 @@ body {
   cursor: default;
 }
 
+/* Tiempo */
 #time {
-  font-size: 2rem;        /* tamaño grande */
-  font-weight: bold;      /* negrita */
-  color: #ff4444;         /* rojo llamativo */
-  font-family: 'Courier New', Courier, monospace; /* estilo digital */
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff4444;
+  font-family: 'Courier New', Courier, monospace;
   background: #fff;
   padding: 5px 15px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
 }
+
+
 
