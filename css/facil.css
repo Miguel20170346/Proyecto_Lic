@@ -52,7 +52,7 @@ body {
 .tile {
   width: 100px;
   height: 100px;
-  background-image: url('../imagenes/placeholders/Placeholder.png');
+  background-image: none;
   background-size: 300px 300px;
   border-radius: 5px;
   cursor: pointer;

@@ -57,7 +57,7 @@ body {
 .tile {
   width: 100px;
   height: 100px;
-  background-image: url('../imagenes/objetivofinal.jpg');
+  background-image: none;
   background-size: 400px 400px; 
   border-radius: 5px;
   cursor: pointer;
