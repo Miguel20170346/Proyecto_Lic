@@ -17,7 +17,7 @@
         
         // Function to simulate going back to home
         function goHome() {
-          window.location.href = '/menu.html';
+          window.location.href = '../menu.html';
         }
         
         // Initialize confetti when page loads
