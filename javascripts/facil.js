@@ -2,22 +2,31 @@ let moves = 0;
 let seconds = 0;
 let timer;
 let isPlaying = false;
+let nivelActual = 0; // controla cuál puzzle está activo
 
-const movesSpan = document.getElementById("moves");
-const timeSpan = document.getElementById("time");
-const board = document.getElementById("puzzle-board");
+const movesSpan = $("#moves");
+const timeSpan = $("#time");
+const board = $("#puzzle-board");
+const previewImg = $(".preview-img");
+
+// Lista de imágenes (5 puzzles diferentes)
+const imagenes = [
+  "../imagenes/nvlFacil/Coatepeque1.jpeg",
+  "../imagenes/nvlFacil/Fuego.jpg",
+  "../imagenes/nvlFacil/Laguna_de_Alegria.png",
+  "../imagenes/nvlFacil/maquilishuat1.jpg",
+  "../imagenes/nvlFacil/Torogoz.jpg"
+];
 
 let tiles = [];
-const condition = Array.from({length: 8}, (_, i) => i);
 let emptyIndex;
 
-// Iniciar temporizador
 function startTimer() {
   if (!isPlaying) {
     isPlaying = true;
     timer = setInterval(() => {
       seconds++;
-      timeSpan.textContent = formatTime(seconds);
+      timeSpan.text(formatTime(seconds));
     }, 1000);
   }
 }
@@ -28,46 +37,46 @@ function formatTime(sec) {
   return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
 }
 
-// Crear tablero dinámico
 function createBoard() {
   tiles = [];
-  board.innerHTML = "";
+  board.empty();
   const size = 3;
   const total = size * size;
+  const imgURL = imagenes[nivelActual];
 
-  board.style.gridTemplateColumns = `repeat(${size}, 100px)`;
-  board.style.gridTemplateRows = `repeat(${size}, 100px)`;
+  board.css({
+    gridTemplateColumns: `repeat(${size}, 100px)`,
+    gridTemplateRows: `repeat(${size}, 100px)`
+  });
 
   for (let i = 0; i < total; i++) {
-    const tile = document.createElement("div");
-    tile.classList.add("tile");
-
-    // 'data-piece' guarda qué pieza está actualmente en esa casilla (0..8)
-    tile.dataset.piece = String(i);
+    const tile = $("<div>").addClass("tile");
+    tile.attr("data-piece", i);
 
     if (i === total - 1) {
-      tile.classList.add("empty");
+      tile.addClass("empty");
       emptyIndex = i;
-      // la ficha vacía no necesita backgroundPosition
-      tile.style.backgroundPosition = "";
     } else {
       const row = Math.floor(i / size);
       const col = i % size;
-      tile.style.backgroundPosition = `-${col * 100}px -${row * 100}px`;
+      tile.css({
+        backgroundImage: `url(${imgURL})`,
+        backgroundPosition: `-${col * 100}px -${row * 100}px`,
+        backgroundSize: `${size * 100}px ${size * 100}px`
+      });
     }
 
-    tile.addEventListener("click", () => moveTile(tiles.indexOf(tile)));
-    board.appendChild(tile);
-    tiles.push(tile);
+    tile.on("click", () => moveTile(tiles.indexOf(tile[0])));
+    board.append(tile);
+    tiles.push(tile[0]);
   }
 
+  previewImg.attr("src", imgURL);
   shuffleBoard();
 }
 
-// Mezclar el tablero
 function shuffleBoard() {
   let lastMove;
-  for (let i = 0; i < 150; i++) {
   for (let i = 0; i < 150; i++) {
     let possibleMoves = getValidMoves();
     let move = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
@@ -82,62 +91,78 @@ function shuffleBoard() {
   seconds = 0;
   isPlaying = false;
   clearInterval(timer);
-  movesSpan.textContent = moves;
-  timeSpan.textContent = "00:00";
-  }
+  movesSpan.text(moves);
+  timeSpan.text("00:00");
 }
 
-// Movimientos válidos
 function getValidMoves() {
-  const size = 3; 
-  const validMoves = []; 
+  const size = 3;
+  const validMoves = [];
   const row = Math.floor(emptyIndex / size);
   const col = emptyIndex % size;
+
   if (row > 0) validMoves.push(emptyIndex - size);
   if (row < size - 1) validMoves.push(emptyIndex + size);
   if (col > 0) validMoves.push(emptyIndex - 1);
   if (col < size - 1) validMoves.push(emptyIndex + 1);
+
   return validMoves;
 }
 
-// Intercambiar fichas
 function swapTiles(i, j) {
-  // intercambia clases y apariencia (como antes)
-  [tiles[i].className, tiles[j].className] = [tiles[j].className, tiles[i].className];
-  [tiles[i].style.backgroundPosition, tiles[j].style.backgroundPosition] = [tiles[j].style.backgroundPosition, tiles[i].style.backgroundPosition];
+  const tileA = $(tiles[i]);
+  const tileB = $(tiles[j]);
+  const tempClass = tileA.attr("class");
+  const tempPos = tileA.css("background-position");
+  const tempImg = tileA.css("background-image");
 
-  // intercambio del identificador lógico de la pieza
+  tileA.attr("class", tileB.attr("class"));
+  tileB.attr("class", tempClass);
+  tileA.css("background-position", tileB.css("background-position"));
+  tileB.css("background-position", tempPos);
+  tileA.css("background-image", tileB.css("background-image"));
+  tileB.css("background-image", tempImg);
+
   [tiles[i].dataset.piece, tiles[j].dataset.piece] = [tiles[j].dataset.piece, tiles[i].dataset.piece];
 }
 
-// Mover ficha
 function moveTile(index) {
   if (getValidMoves().includes(index)) {
     swapTiles(index, emptyIndex);
     emptyIndex = index;
     moves++;
-    movesSpan.textContent = moves;
+    movesSpan.text(moves);
     startTimer();
     revisarSolucion();
   }
 }
-createBoard();
 
-// Comprobar si está resuelto
 function revisarSolucion() {
   const total = tiles.length;
-
-  // la casilla vacía debe estar en la última posición
   if (emptyIndex !== total - 1) return false;
 
-  // cada casilla i (excepto la última) debe contener la pieza i
   for (let i = 0; i < total - 1; i++) {
-    if (parseInt(tiles[i].dataset.piece, 10) !== i) {
-      return false;
-    }
+    if (parseInt(tiles[i].dataset.piece, 10) !== i) return false;
   }
+
   clearInterval(timer);
   isPlaying = false;
-  alert(`¡Felicidades! Rompecabezas resuelto en ${moves} movimientos y ${formatTime(seconds)} minutos.`);
+
+  alert(`¡Puzzle ${nivelActual + 1} completado!`);
+
+  // Avanzar al siguiente nivel
+  nivelActual++;
+  if (nivelActual < imagenes.length) {
+    setTimeout(createBoard, 800);
+  } else {
+    alert("¡Completaste todos los puzzles del nivel fácil! Pasando al nivel intermedio...");
+    window.location.href = "intermedio.html";
+  }
+
   return true;
 }
+
+// Iniciar primer puzzle al cargar
+$(document).ready(() => {
+  createBoard();
+});
